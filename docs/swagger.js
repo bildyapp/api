@@ -26,6 +26,10 @@ const options = {
             {
                 url: "http://localhost:8000/",
                 description: "Local"
+            },
+            {
+                url: "https://fascinating-madelena-bildyapp-be63757b.koyeb.app/",
+                description: "Production"
             }
         ],
         components: {
