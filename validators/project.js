@@ -7,6 +7,7 @@ const validatorProject = [
     check("projectCode").optional(),//.exists().notEmpty(),
     check("address").optional().isObject(),//.exists().notEmpty().isObject(),
     check("code").optional(),
+    check("email").optional().isEmail(),
     check("clientId").exists().notEmpty().isMongoId(),
     (req, res, next) => {
         return validateResults(req, res, next)
@@ -17,6 +18,7 @@ const validatorCompleteProject = [
     check("name").exists().notEmpty(),
     check("projectCode").exists().notEmpty(),
     check("code").optional(),
+    check("email").optional().isEmail(),
     check("clientId").exists().notEmpty().isMongoId(),
     check("address").optional().isObject(),
     check("begin").optional(),

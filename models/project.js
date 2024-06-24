@@ -37,6 +37,9 @@ const ProjectScheme = new mongoose.Schema(
         },
         notes: {
             type: String
+        },
+        email: {
+            type:String
         }
     },
     {
