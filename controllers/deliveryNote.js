@@ -64,6 +64,8 @@ const getDN = async (userId, id) => {
             "format": dataNote.format,
             "hours": dataNote.hours,
             "material": dataNote.material,
+            "quantity": dataNote.quantity,
+            "unit": dataNote.unit,
             "sign": dataNote.sign,
             "observations": dataNote.observations
         }
@@ -252,10 +254,12 @@ const downloadPDF = async (req, res) => {
                     "",
                 cif: dn.client.cif
             },
+            formato: dn.format,
             codigoProyecto: dn?.project ?? "",
             descripcion: dn?.description ?? "",
-            cantidad: dn?.hours ?? "",
-            unidades: dn?.format ?? "",
+            material: dn?.material ?? "",
+            cantidad: dn.hours ? dn.hours : dn.quantity,
+            unidades: dn.format == 'hours' ? 'horas' : dn.unit,
             observaciones: dn?.observations ?? ""
         };
         const constantColor = '#888888';
@@ -277,7 +281,7 @@ const downloadPDF = async (req, res) => {
             doc.strokeColor(constantColor).moveTo(50, doc.y + 5).lineTo(550, doc.y + 5).stroke();
             doc.moveDown(1);
             doc.fillColor('black').fontSize(10).text(
-                `${data.empresa.nombre}\n${data.empresa.direccion}\n${data.empresa.ciudad}\nCIF: ${data.empresa.cif}`, { indent: 20 });  
+                `${data.empresa.nombre}\n${data.empresa.direccion}\n${data.empresa.ciudad}\nCIF: ${data.empresa.cif}`, { indent: 20 });
             doc.moveDown(1);
         } else {
             doc.y = 100
@@ -300,17 +304,28 @@ const downloadPDF = async (req, res) => {
         doc.text(`CODIGO PROYECTO: ${data.codigoProyecto}`, 50, doc.y + 10, { indent: 20 });
         doc.moveDown();
         // Información del trabajo realizado
-        doc.fillColor(constantColor).fontSize(12).text('DESCRIPCION', 50, doc.y + 10, { indent: 20 });
-        doc.fillColor(constantColor).text('CANT', 250, doc.y - 14, { indent: 20 });
+        let descK = "DESCRIPCION"
+        let descV = data.descripcion
+        if (data.formato == "material") {
+            descK = "MATERIAL"
+            descV = data.material
+        }
+        doc.fillColor(constantColor).fontSize(12).text(descK, 50, doc.y + 10, { indent: 20 });
+        doc.fillColor(constantColor).text('CANT', 260, doc.y - 14, { indent: 20 });
         doc.fillColor(constantColor).text('UDS', 350, doc.y - 14, { indent: 20 });
         doc.strokeColor(constantColor).moveTo(50, doc.y + 5).lineTo(550, doc.y + 5).stroke();
         doc.moveDown(1);
-        doc.text(`${data.cantidad}`, 260, doc.y, { indent: 20 });
-        if (data.unidades == "hours") {
-            data.unidades = "horas"
+
+        if (data.formato == "material") {
+            doc.fillColor('black').fontSize(10).text(`${descV}`, 50, doc.y, { indent: 20 });
+            doc.text(`${data.cantidad}`, 260, doc.y - 11, { indent: 20 });
+            doc.text(`${data.unidades}`, 350, doc.y - 13, { indent: 20 });
         }
-        doc.text(`${data.unidades}`, 350, doc.y - 15, { indent: 20 });
-        doc.fillColor('black').fontSize(10).text(`${data.descripcion}`, 50, doc.y + 5, { indent: 20 });
+        if (data.formato == "hours") {
+            doc.text(`${data.cantidad}`, 260, doc.y, { indent: 20 });
+            doc.text(`${data.unidades}`, 350, doc.y - 15, { indent: 20 });
+            doc.fillColor('black').fontSize(10).text(`${descV}`, 50, doc.y + 5, { indent: 20 });
+        }
         doc.moveDown();
         // Espacio para la firma
         doc.fillColor(constantColor).text('FIRMADO', 50, doc.y + 30, { indent: 20 });

@@ -16,16 +16,27 @@ const DeliveryNoteScheme = new mongoose.Schema(
         internalProjectCode: {
             type: String
         },
+
         format:{
             type: String,
             enum: ["material","hours"]
         },
+
+        /* material delivery note added */
         material: {
             type: String
         },
+        quantity: {
+            type: Number
+        },
+        unit: {
+            type: String
+        },
+        /* hours delivery note added */
         hours: {
             type: Number
         },
+
         description: {
             type: String
         },

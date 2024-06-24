@@ -7,6 +7,8 @@ const validatorDeliveryNote = [
     check("description").exists(),
     check("format").exists().notEmpty(),
     check("material").optional(),
+    check("quantity").optional(),
+    check("unit").optional(),
     check("hours").optional(),
     check("workdate").optional(),
     (req, res, next) => {
