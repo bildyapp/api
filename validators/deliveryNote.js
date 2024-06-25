@@ -4,7 +4,7 @@ const validateResults = require("../utils/handleValidator")
 const validatorDeliveryNote = [
     check("clientId").exists().notEmpty().isMongoId(),
     check("projectId").exists().notEmpty().isMongoId(),
-    check("description").exists(),
+    check("description").optional(),
     check("format").exists().notEmpty(),
     check("material").optional(),
     check("quantity").optional(),
