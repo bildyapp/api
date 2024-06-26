@@ -675,7 +675,7 @@ const options = {
                     type: "object",
                     required: ["notifications"],
                     properties: {
-                        name: {
+                        notifications: {
                             type: "boolean",
                             example: "true"
                         }

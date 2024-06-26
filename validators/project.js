@@ -16,14 +16,14 @@ const validatorProject = [
 
 const validatorCompleteProject = [
     check("name").exists().notEmpty(),
-    check("projectCode").exists().notEmpty(),
+    check("projectCode").optional(),
     check("code").optional(),
     check("email").optional().isEmail(),
-    check("clientId").exists().notEmpty().isMongoId(),
+    check("clientId").optional().isMongoId(),
     check("address").optional().isObject(),
     check("begin").optional(),
     check("end").optional(),
-    check("notes").exists(),
+    check("notes").optional(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
