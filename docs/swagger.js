@@ -754,7 +754,7 @@ const options = {
                 },
                 projectComplete: {
                     type: "object",
-                    required: ["name", "projectCode", "code", "client", "notes"],
+                    required: ["name"],
                     properties: {
                         name: {
                             type: "string",
