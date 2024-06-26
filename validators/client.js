@@ -4,6 +4,8 @@ const validateResults = require("../utils/handleValidator")
 const validatorClient = [
     check("name").exists().notEmpty(),
     check("cif").optional().isLength({ min: 8, max: 9 }),
+    check("address").optional().isObject(),
+    check("logo").optional(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }

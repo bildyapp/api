@@ -605,6 +605,31 @@ const options = {
                             type: "string",
                             example: "D52921210"
                         },
+                        address: {
+                            type: "object",
+                            properties: {
+                                street: {
+                                    type: "string",
+                                    example: "Carlos V"
+                                },
+                                number: {
+                                    type: "integer",
+                                    example: 22
+                                },
+                                postal: {
+                                    type: "integer",
+                                    example: 28936
+                                },
+                                city: {
+                                    type: "string",
+                                    example: "Móstoles"
+                                },
+                                province: {
+                                    type: "string",
+                                    example: "Madrid"
+                                }
+                            }
+                        }
                     }
                 },
                 clientComplete: {
@@ -688,6 +713,10 @@ const options = {
                             type: "string",
                             example: "Identificador de proyecto"
                         },
+                        email: {
+                            type: "string",
+                            example: "mimail@gmail.com"
+                        },
                         address: {
                             type: "object",
                             properties: {
@@ -738,6 +767,10 @@ const options = {
                         projectCode: {
                             type: "string",
                             example: "100000"
+                        },
+                        email: {
+                            type: "string",
+                            example: "mimail@gmail.com"
                         },
                         client: {
                             type: "string",
