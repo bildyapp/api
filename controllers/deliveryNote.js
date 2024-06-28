@@ -67,7 +67,8 @@ const getDN = async (userId, id) => {
             "quantity": dataNote.quantity,
             "unit": dataNote.unit,
             "sign": dataNote.sign,
-            "observations": dataNote.observations
+            "observations": dataNote.observations,
+            "name": dataNote.name
         }
         return data
     } catch (err) {
@@ -168,12 +169,8 @@ const updateObservations = async (req, res) => {
     try {
         const userId = req.user._id
         const { id, ...body } = matchedData(req)
-
         const filter = { _id: id, userId: userId }
-        const update = {
-            observations: body.observations
-        }
-        const doc = await deliveryNoteModel.updateOne(filter, update)
+        const doc = await deliveryNoteModel.updateOne(filter, body)
         res.send(doc)
     } catch (err) {
         console.log(err)
@@ -260,7 +257,8 @@ const downloadPDF = async (req, res) => {
             material: dn?.material ?? "",
             cantidad: dn.hours ? dn.hours : dn.quantity,
             unidades: dn.format == 'hours' ? 'horas' : dn.unit,
-            observaciones: dn?.observations ?? ""
+            observaciones: dn?.observations ?? "",
+            nombre: dn?.name ?? ""
         };
         const constantColor = '#888888';
         // Descargar la imagen de la 
@@ -334,9 +332,12 @@ const downloadPDF = async (req, res) => {
             doc.image(signaturePath, 80, doc.y + 10, { width: 100 });
         }
         doc.moveDown();
+        // Añadir campo "Nombre" debajo de la firma
+        doc.fillColor('black').fontSize(10).text(`${data.nombre}`, 70, doc.y + 70, { indent: 20 });
+        doc.moveDown();
         // Añadir campo "Observaciones" si existe
         if (dn.observations && dn.observations != "") {
-            doc.fillColor(constantColor).text('OBSERVACIONES', 50, doc.y + 110, { indent: 20 });
+            doc.fillColor(constantColor).text('OBSERVACIONES', 50, doc.y + 10, { indent: 20 });
             //doc.moveDown(1);
             doc.fillColor('black').fontSize(10).text(`${data.observaciones}`, 50, doc.y + 10, { indent: 20 });
         }

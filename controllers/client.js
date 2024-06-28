@@ -90,7 +90,6 @@ const updateClient = async (req, res) => {
     try {
         userId = req.user._id
         const { id, ...body } = matchedData(req)
-        console.log(id, body)
         const data = await clientModel.findOneAndUpdate({ _id: id, userId: userId }, body)
         res.send(data)
     } catch (err) {

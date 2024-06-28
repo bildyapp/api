@@ -572,12 +572,16 @@ const options = {
                 },
                 observations: {
                     type: "object",
-                    required: ["observations"],
+                    required: ["name"],
                     properties: {
-                        observations: {
+                        name: {
                             type: "string",
-                            example: "Observaciones ..."
-                        }
+                            example: "Juan Gutierrez"
+                        },
+                        nif: {
+                            type: "string",
+                            example: "46006760A"
+                        },
                     }
                 },
                 login: {

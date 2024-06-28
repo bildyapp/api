@@ -38,7 +38,9 @@ const validatorSign = [
 ]
 
 const validatorObservations = [
-    check("observations").exists().notEmpty(),
+    check("name").exists().notEmpty().isLength({ max: 100 }),
+    check("nif").optional().isLength({ min: 8, max: 9 }),
+    check("observations").optional(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }

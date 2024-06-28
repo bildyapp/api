@@ -55,6 +55,12 @@ const DeliveryNoteScheme = new mongoose.Schema(
         },
         pdf: {
             type: String
+        },
+        name: {
+            type: String
+        },
+        nif: {
+            type: String
         }
     },
     {

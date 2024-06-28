@@ -40,7 +40,7 @@ const UserScheme = new mongoose.Schema(
         role:{
             type: String,
             enum: ["user", "admin", "guest"], 
-            default: "user"
+            default: "admin"
         },
         address: {
             street: String,
