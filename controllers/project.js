@@ -6,7 +6,7 @@ const getProjects = async (req, res) => {
     try {
         const userId = req.user._id
         const {id} = matchedData(req) //
-        console.log(userId, id)
+        //console.log(userId, id)
         const data = await projectModel.find({userId: userId, clientId: id}).sort({ updatedAt: -1 })
         res.send(data)
     } catch (err) {

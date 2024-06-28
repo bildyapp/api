@@ -108,7 +108,7 @@ const updateImage = async (req, res) => {
         const filePath = path.join(__dirname, `../storage/${file.filename}`)
         const ipfsFile = await uploadToPinata(filePath)
         const ipfs = `https://${process.env.PINATA_GATEWAY_URL}/ipfs/${ipfsFile}`
-        console.log("ipfs uri:", ipfs)
+        //console.log("ipfs uri:", ipfs)
         const data = await clientModel.findOneAndUpdate({ _id: id, userId: userId }, {logo: ipfs})
         res.send(data)
     }catch(err) {
