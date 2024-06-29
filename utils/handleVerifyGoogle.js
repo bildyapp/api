@@ -7,9 +7,12 @@ async function verify(token) {
         audience: process.env.CLIENT_ID,  
     });
     const payload = ticket.getPayload();
-    //console.log("payload:", payload)
-    const userid = payload['sub'];
-    return userid;
+    const user = {
+        name: payload.given_name ? payload.given_name : payload.name,
+        surnames: payload.family_name ? payload.family_name : "",
+        email: payload.email
+    }
+    return user;
 }
 
 module.exports = { verify }

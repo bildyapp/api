@@ -10,11 +10,22 @@ const { userModel } = require("../models")
 const registerGoogle = async (req, res) => {
     try {
         const { token } = matchedData(req)
-        const userid = await verify(token)
-        res.send(userid)
-      
+        const dataUser = await verify(token)
+        const filter = { email: dataUser.email }
+        const user = await userModel.findOne(filter).select("email status role")
+        let dataRes
+        if (!user) {
+            dataRes = await userModel.create({...dataUser, status:1})
+        } else {
+            dataRes = user
+        }
+        const data = {
+            token: tokenSign(dataRes),
+            user: dataRes
+        }
+        res.send(data)
     } catch (err) {
-        //console.log(err)
+        console.log(err)
         handleHttpError(res, "ERROR_REGISTER_GOOGLE")
     }
 }
@@ -25,7 +36,6 @@ const registerCtrl = async (req, res) => {
         req = matchedData(req)
         const password = await encrypt(req.password)
         const emailCode = generateVerificationCode();
-
         const filter = { email: new RegExp(`^${req.email}$`, 'i') }
         const user = await userModel.findOne(filter).select("email status")
 
@@ -175,7 +185,7 @@ const validateEmail = async (req, res) => {
         } else {
             const counter = data.attempt + 1
             await userModel.updateOne({_id: userId}, {attempt: counter})
-            handleHttpError(res, "ERROR_MAIL_CODE")
+            handleHttpError(res, "ERROR_MAIL_CODE")          
         }
     } catch (err) {
         //console.log(err)

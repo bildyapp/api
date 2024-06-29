@@ -46,6 +46,10 @@ router.get("/", authMiddleware, getUser)
  *      responses:
  *          '200':
  *              description: Returns the user's data.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/userData"
  *          '422':
  *              description: Validation error. The request body contains invalid fields.
  *          '500':
@@ -437,7 +441,5 @@ router.delete("/", authMiddleware, deleteUser)
  *          - bearerAuth: []
  */
 router.patch("/logo", authMiddleware, uploadMiddlewareMemory.single("image"), updateImage)
-
-
 
 module.exports = router
