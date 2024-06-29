@@ -404,7 +404,7 @@ router.patch("/pdf/:id", authMiddleware, validatorGetItem, updatePDF)
  *          - bearerAuth: []
  */
 router.get("/pdf/:id", authMiddleware, validatorGetItem, downloadPDF)
-//router.get("/pdf/:id", authMiddleware, validatorGetItem, testPDF)
+
 
 /**
  * @openapi

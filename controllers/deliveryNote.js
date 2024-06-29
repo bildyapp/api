@@ -68,7 +68,7 @@ const getDN = async (userId, id) => {
             "unit": dataNote.unit,
             "sign": dataNote.sign,
             "observations": dataNote.observations,
-            "name": dataNote.name
+            "signer": dataNote.name
         }
         return data
     } catch (err) {
@@ -234,7 +234,6 @@ const downloadPDF = async (req, res) => {
         const userId = req.user._id
         const { id } = matchedData(req)
         const dn = await getDN(userId, id)
-
         const data = {
             empresa: {
                 nombre: dn?.company?.name ?? "",
@@ -258,7 +257,7 @@ const downloadPDF = async (req, res) => {
             cantidad: dn.hours ? dn.hours : dn.quantity,
             unidades: dn.format == 'hours' ? 'horas' : dn.unit,
             observaciones: dn?.observations ?? "",
-            nombre: dn?.name ?? ""
+            firmante: dn?.signer ?? ""
         };
         const constantColor = '#888888';
         // Descargar la imagen de la 
@@ -333,7 +332,7 @@ const downloadPDF = async (req, res) => {
         }
         doc.moveDown();
         // Añadir campo "Nombre" debajo de la firma
-        doc.fillColor('black').fontSize(10).text(`${data.nombre}`, 70, doc.y + 70, { indent: 20 });
+        doc.fillColor('black').fontSize(10).text(`${data.firmante}`, 90, doc.y + 70, { indent: 20 });
         doc.moveDown();
         // Añadir campo "Observaciones" si existe
         if (dn.observations && dn.observations != "") {
